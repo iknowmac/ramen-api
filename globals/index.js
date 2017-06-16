@@ -10,7 +10,6 @@ module.exports.load = function globalsLoad() {
 
   global.model = function model(filename) {
     const name = normalize(filename);
-    console.log(name);
     return require(path.join(__approot, 'models', name));
   };
 

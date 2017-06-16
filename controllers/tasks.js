@@ -22,11 +22,9 @@ module.exports.controller = function (app) {
   })
 
   .get('/tasks/:id', function (req, res) {
-    console.log(req);
     Task.findOne({ _id: req.params.id })
       .populate('owner', ownerFields)
       .exec(function (err, task) {
-        console.log('TASK:', task);
         if (err) return res.send(err);
         return res.jsonp(task);
       });
