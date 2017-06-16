@@ -1,0 +1,44 @@
+{
+  "parser": "babel-eslint",
+
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+
+  "env": {
+    "node": true,
+    "es6": true,
+    "mocha": true,
+    "mongo": true
+  },
+
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "impliedStrict": true,
+      "jsx": true
+    }
+  },
+
+  "rules": {
+    "import/extensions": "warn",
+    "strict": ["error", "global"],
+    "no-unused-vars": ["warn", { "vars": "all", "args": "all", "caughtErrors": "none" }],
+    "no-console": 0,
+    "camelcase": 0,
+    "consistent-return": "error",
+    "arrow-spacing": "error",
+    "arrow-parens": ["error", "always"],
+    "arrow-body-style": ["error", "as-needed", { requireReturnForObjectLiteral: true }],
+    "semi": ["error", "always"],
+    "no-confusing-arrow": ["error", { "allowParens": true }],
+    "no-constant-condition": "error",
+    "no-labels": "error",
+    "no-multiple-empty-lines": ["error", { max: 1, maxEOF: 1 }],
+    "func-style": "off"
+  }
+
+}
