@@ -24,7 +24,7 @@ const config = exports.config = function (mode) {
   return configs[mode || process.argv[2] || 'development'] || configs.development;
 };
 
-const load = exports.load = function (mode) {
+exports.load = function (mode) {
   const conf = config(mode);
 
   mongoose.Promise = bluebird;

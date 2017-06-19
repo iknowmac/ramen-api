@@ -1,4 +1,4 @@
-/* global __approot debug */
+/* global __appRoot debug */
 
 require('dotenv').load({ path: '.env' });
 require('../../globals').load();
@@ -8,8 +8,8 @@ const bluebird = require('bluebird');
 const seeder = require('mongoose-seed-plus');
 const config = require('../../db').config(process.env.NODE_ENV);
 const seeds = [
-  { path: path.join(__approot, 'models/task.js'), name: 'Task', clear: true },
-  { path: path.join(__approot, 'models/user.js'), name: 'User', clear: true },
+  { path: path.join(__appRoot, 'models/task.js'), name: 'Task', clear: true },
+  { path: path.join(__appRoot, 'models/user.js'), name: 'User', clear: true },
 ];
 
 seeder.Promise = bluebird;
