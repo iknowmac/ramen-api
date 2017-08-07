@@ -3,22 +3,46 @@
 require('dotenv').load({ path: '.env' });
 require('../../globals').load();
 
-const path = require('path');
-const bluebird = require('bluebird');
 const seeder = require('mongoose-seed-plus');
+const chalk = require('chalk');
+const path = require('path');
 const config = require('../../db').config(process.env.NODE_ENV);
-const seeds = [
-  { path: path.join(__appRoot, 'models/task.js'), name: 'Task', clear: true },
-  { path: path.join(__appRoot, 'models/user.js'), name: 'User', clear: true },
-];
 
-seeder.Promise = bluebird;
-seeder.connect(config.uri, (err) => {
+const options = {
+  mongodb: {
+    host: config.dbhost,
+    port: config.dbport,
+    dbname: config.dbname
+  },
+  dump: {
+    enable: false
+  },
+  models: [
+    { path: path.join(__appRoot, 'models/task.js'), name: 'Task', clear: true },
+    { path: path.join(__appRoot, 'models/user.js'), name: 'User', clear: true }
+  ],
+  path: path.join(__dirname, '/migrations')
+};
+
+new seeder(options, (err, result) => {
   if (err) {
-    debug('mongodb', `Error connecting to database ${config.uri} ${err}`);
+    throw err.message;
   }
 
-  debug('mongodb', `Connected to database ${config.uri}`);
+  console.log(`Successfully connected to MongoDB: ${chalk.grey(result.db)}\n`);
 
-  return seeder.start(__dirname, seeds, false);
+  if (result.cleared) {
+    console.log(chalk.cyan(`Cleared Models`));
+    for (var i in result.cleared) {
+      console.log(`${chalk.red(result.cleared[i])}`);
+    }
+    console.log('\r');
+  }
+
+  console.log(chalk.cyan('Seeded Model: Documents'));
+  for (var prop in result.populate) {
+    console.log(`${chalk.green(prop)}: ${chalk.grey(result.populate[prop])}`);
+  }
+
+  console.log('\r');
 });
